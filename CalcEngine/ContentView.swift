@@ -9,39 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+        CalculatorView()
         
-        VStack {
-            //TExtEditor
-            HStack{
-                
-            }
-            //Gridstack
-            HStack{
-                Grid{
-                    GridRow{
-                        
-                    }
-                    GridRow{
-                        
-                    }
-                    GridRow{
-                        
-                    }
-                    GridRow{
-                        
-                    }
-                    GridRow{
-                        
-                    }
-                    
-                }
-            }
-        }
-        //Show stack
-        VStack{
-            
-        }
-        .padding()
     }
 }
 
