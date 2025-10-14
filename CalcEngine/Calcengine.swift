@@ -6,78 +6,80 @@
 //
 
 import Foundation
-
-class Calcengine {
+@Observable
+class Calcengine{
     var result: String = ""
     var stack: [Double] = []
-
+   
     func getalopschuiven(_ number: Double) {
-        stack.append(number)
-        result = "Pushed \(number)"
-    }
-
+            guard number >= 0 && number <= 9 else { return }
+            
+            if stack.isEmpty {
+                stack.append(number)
+            } else {
+                let oudGetal = stack.popLast()!
+                let nieuwGetal = oudGetal * 10 + number
+                stack.append(nieuwGetal)
+            }
+            showStack()
+        }
+    
     func enter() {
-        result = "Entered: \(stack.last ?? 0)"
+        stack.append(0)
+        showStack()
     }
-
+    
     func clear() {
         stack.removeAll()
-        result = "Cleared"
+        showStack()
     }
-
-    func optellen() {
+    
+    func showStack(){
+        result = stack.map { String($0) }.joined(separator: "\n")
+    }
+    
+    func maal(){
         if stack.count >= 2 {
             let b = stack.popLast()!
             let a = stack.popLast()!
-            let res = a + b
-            stack.append(res)
-            result = "\(a) + \(b) = \(res)"
+            stack.append(a * b)
+            showStack()
         } else {
-            result = "Error: not enough values"
+            result = "Fout: te weinig getallen\n" + result
         }
     }
-
-    func aftrekken() {
+    
+    func delen(){
         if stack.count >= 2 {
             let b = stack.popLast()!
             let a = stack.popLast()!
-            let res = a - b
-            stack.append(res)
-            result = "\(a) - \(b) = \(res)"
+            stack.append(a / b)
+            showStack()
         } else {
-            result = "Error: not enough values"
+            result = "Fout: te weinig getallen\n" + result
         }
     }
-
-    func maal() {
+    
+    func aftrekken(){
         if stack.count >= 2 {
             let b = stack.popLast()!
             let a = stack.popLast()!
-            let res = a * b
-            stack.append(res)
-            result = "\(a) * \(b) = \(res)"
+            stack.append(a - b)
+            showStack()
         } else {
-            result = "Error: not enough values"
+            result = "Fout: te weinig getallen\n" + result
         }
     }
-
-    func delen() {
+    
+    func optellen(){
         if stack.count >= 2 {
             let b = stack.popLast()!
             let a = stack.popLast()!
-            guard b != 0 else {
-                result = "Error: divide by zero"
-                return
-            }
-            let res = a / b
-            stack.append(res)
-            result = "\(a) / \(b) = \(res)"
+            stack.append(a + b)
+            showStack()
         } else {
-            result = "Error: not enough values"
+            result = "Fout: te weinig getallen\n" + result
         }
-    }
-
-    func showStack() {
-        result = stack.map { "\($0)" }.joined(separator: "\n")
+        
     }
 }

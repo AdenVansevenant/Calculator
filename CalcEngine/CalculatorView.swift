@@ -12,69 +12,72 @@ struct CalculatorView: View {
 
     var body: some View {
         VStack {
-            // Resultaat tonen (read-only)
-            TextEditor(text: .constant(calc.result))
-                .frame(width: 100, height: 150)
-                .border(.black)
-                .background(.white)
-                .padding()
+            HStack{
+                TextEditor(text: $calc.result)
+                    .frame(width: 100, height: 150)
+                    .border(.black)
+                    .background(.white)
+                    .padding()
 
-            // Grid met knoppen
-            Grid {
-                GridRow {
-                    ForEach(7..<10) { number in
-                        Button("\(number)") {
-                            calc.getalopschuiven(Double(number))
+                // Grid met knoppen
+                Grid {
+                    GridRow {
+                        ForEach(7..<10) { number in
+                            Button("\(number)") {
+                                calc.getalopschuiven(Double(number))
+                            }
                         }
+                        Button("/") { calc.delen() }
                     }
-                    Button("/") { calc.delen() }
-                }
 
-                GridRow {
-                    ForEach(4..<7) { number in
-                        Button("\(number)") {
-                            calc.getalopschuiven(Double(number))
+                    GridRow {
+                        ForEach(4..<7) { number in
+                            Button("\(number)") {
+                                calc.getalopschuiven(Double(number))
 
+                            }
                         }
+                        Button("*") { calc.maal() }
                     }
-                    Button("*") { calc.maal() }
-                }
 
-                GridRow {
-                    ForEach(1..<4) { number in
-                        Button("\(number)") {
-                            calc.getalopschuiven(Double(number))
+                    GridRow {
+                        ForEach(1..<4) { number in
+                            Button("\(number)") {
+                                calc.getalopschuiven(Double(number))
 
+                            }
                         }
+                        Button("-") { calc.aftrekken() }
                     }
-                    Button("-") { calc.aftrekken() }
-                }
 
-                GridRow {
-                    ForEach(0..<1) { number in
-                        Button("\(number)") {
-                            calc.getalopschuiven(Double(number))
+                    GridRow {
+                        ForEach(0..<1) { number in
+                            Button("\(number)") {
+                                calc.getalopschuiven(Double(number))
 
+                            }
                         }
+                        Button("") { }
+                        Button("") { }
+                        Button("+") { calc.optellen() }
                     }
-                    Button("") { }
-                    Button("") { }
-                    Button("+") { calc.optellen() }
+
+                    GridRow {
+                        Button("Clear") { calc.clear() }
+                            .gridCellColumns(2)
+                        Button("Enter") { calc.enter() }
+                            .gridCellColumns(2)
+                    }
                 }
 
-                GridRow {
-                    Button("Clear") { calc.clear() }
-                        .gridCellColumns(2)
-                    Button("Enter") { calc.enter() }
-                        .gridCellColumns(2)
-                }
+                
             }
-
             // Stack tonen
             Button("Show Stack") {
-                //calc.showStack()
+                calc.showStack()
             }
             .padding()
+            
         }
     }
 }
